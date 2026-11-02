@@ -1,6 +1,6 @@
 Remove-Printer -Name "XP-90 (copy 1)"
-Remove-Printer -Name "POS Printer 300DPI Series"
-Remove-Printer -Name "POS Printer 203DPI Series"
+Get-Printer | Where-Object { $_.Name -like "POS Printer 300DPI*" } | Remove-Printer
+Get-Printer | Where-Object { $_.Name -like "POS Printer 203DPI*" } | Remove-Printer
 
 Get-Printer | Format-Table Name,DriverName,PortName -AutoSize
 
