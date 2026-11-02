@@ -1,0 +1,37 @@
+YAZICI DRIVER TEMIZLEME - WINDOWS POWERSHELL (YONETICI)
+======================================================
+DIKKAT: CALISAN DIGER YAZICIYA DOKUNMA!
+Komutlari TEK TEK calistir. Tirnak icindeki ornek adlari kendi listendeki adlarla degistir.
+
+1) Yazicilari ve hangi driver/portu kullandiklarini gor:
+Get-Printer | Format-Table Name,DriverName,PortName -AutoSize
+
+2) Kurulu yazici driverlarini gor:
+Get-PrinterDriver | Format-Table Name,Manufacturer -AutoSize
+
+3) YALNIZ sorunlu yazicinin kaydini sil (adi degistir):
+Remove-Printer -Name "SORUNLU_YAZICI_ADI"
+
+4) Silinecek driveri baska yazici kullaniyor mu kontrol et (adi degistir):
+Get-Printer | Where-Object { $_.DriverName -eq "ESKI_DRIVER_ADI" } | Format-Table Name,DriverName -AutoSize
+
+5) 4. komut HICBIR yazici gostermiyorsa eski driveri sil (adi degistir):
+Remove-PrinterDriver -Name "ESKI_DRIVER_ADI"
+
+6) Windows Driver Store icindeki driver paketlerini listele:
+pnputil /enum-drivers /class Printer
+
+7) YALNIZ sorunlu yaziciya ait oldugu KESIN olan paketi sil (oem42.inf ORNEKTIR):
+pnputil /delete-driver oem42.inf
+
+8) Son kontrol:
+Get-Printer | Format-Table Name,DriverName,PortName -AutoSize
+Get-PrinterDriver | Format-Table Name,Manufacturer -AutoSize
+
+SONRA: Bilgisayari yeniden baslat; dogru driveri resmi ureticiden kur; USB'yi bagla; Windows test sayfasi bastir; Hub'a tanit.
+
+UYARI:
+- /force kullanma.
+- Spooler dosyalarini veya tum driverlari topluca silme.
+- 7. adimda oemXX.inf kimligini uretici, surucu adi ve surumuyla dogrulamadan silme.
+- "Surucu kullanimda" hatasinda zorlamadan dur.
