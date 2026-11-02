@@ -7,6 +7,11 @@ Get-Printer | Format-Table Name,DriverName,PortName -AutoSize
 Remove-PrinterDriver -Name "POS Printer 300DPI Series"
 Remove-PrinterDriver -Name "POS Printer 203DPI Series"
 
+$printer = Get-Printer | Where-Object { $_.Name -like "POS Printer 203DPI*" }
+(New-Object -ComObject WScript.Network).SetDefaultPrinter($printer.Name)
+
+Get-CimInstance Win32_Printer | Where-Object Default -eq $true | Select-Object Name, Default
+
 Get-Printer
 Get-PrinterDriver
 
