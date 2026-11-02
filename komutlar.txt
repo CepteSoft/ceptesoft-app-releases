@@ -1,3 +1,15 @@
+Remove-Printer -Name "XP-90 (copy 1)"
+Remove-Printer -Name "POS Printer 300DPI Series"
+Remove-Printer -Name "POS Printer 203DPI Series"
+
+Get-Printer | Format-Table Name,DriverName,PortName -AutoSize
+
+Remove-PrinterDriver -Name "POS Printer 300DPI Series"
+Remove-PrinterDriver -Name "POS Printer 203DPI Series"
+
+Get-Printer
+Get-PrinterDriver
+
 YAZICI DRIVER TEMIZLEME - WINDOWS POWERSHELL (YONETICI)
 ======================================================
 DIKKAT: CALISAN DIGER YAZICIYA DOKUNMA!
